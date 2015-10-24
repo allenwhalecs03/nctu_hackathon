@@ -7,6 +7,14 @@ class ProductService(BaseService):
         self.rs = rs
         ProductService.inst = self
 
+    def get_product(self, data):
+        args = ['store_id', 'id']
+        err = self.check_required_args(args, data)
+        if err: return (err, None)
+        res, res_cnt = yield from self.db.execute('SELECT * FROM products WHERE store_id = %s;', (data['store_id'],))
+        print("PRO", res)
+        return (None, res)
+
     def add_product(self, data):
         args = ['id', 'name', 'store_id']
         err = self.check_required_args(args, data)

@@ -75,7 +75,8 @@ if __name__ == '__main__':
         ('/stores/', WebStoreHandler),
         ('/stores/(.*)/', WebStoreHandler),
         ('/products/', WebProductHandler),
-        ('/products/(.*)/', WebProductHandler),
+        ('/products/(\w+)/', WebProductHandler),
+        ('/products/(\w+)/(\d+)/', WebProductHandler),
         #### api
         ('/api/banks/info/', ApiInfoHandler),
         ('/api/users/signin/', ApiLoginHandler),
@@ -96,6 +97,7 @@ if __name__ == '__main__':
     Service.User = UserService(db, rs)
     Service.Bank = BankService(db, rs)
     Service.Store = StoreService(db, rs)
+    Service.Product = ProductService(db, rs)
     srv.listen(config.PORT)
     print('Server Started')
     signal.signal(signal.SIGTERM, sig_handler)

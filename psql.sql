@@ -33,6 +33,7 @@ CREATE TABLE products (
     id              serial          NOT NULL PRIMARY KEY,
     store_id        integer         NOT NULL REFERENCES stores(id) ON DELETE CASCADE,
     title           varchar(255),
+    price           integer         DEFAULT 100,
     description     text,
     qrcode          varchar(255),
     created_at      timestamp       DEFAULT date_trunc('second',now()),
