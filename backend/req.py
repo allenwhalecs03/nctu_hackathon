@@ -62,7 +62,8 @@ class RequestHandler(tornado.web.RequestHandler):
         super().prepare();
         try: 
             self.token = self.get_secure_cookie('token').decode()
-            err, self.acct = Service.User.get_user_info(self.token)
+            self.id = self.get_secure_cookie('id').decode()
+            err, self.acct = Service.User.get_user_info(self.token, self.id)
             if err: raise Exception()
         except: 
             self.token = None
