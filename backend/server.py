@@ -20,6 +20,7 @@ from api.login import LoginHandler
 ### web
 from web.index import WebIndexHandler
 from web.user  import WebUserSignHandler
+from web.error import Web404Handler
 
 ### built-in module
 import time
@@ -61,6 +62,7 @@ if __name__ == '__main__':
 
         ('/users/(sign.*)/', WebUserSignHandler),
         ('/api/users/signin/', LoginHandler),
+        ('.*', Web404Handler),
         ],  cookie_secret = config.COOKIE_SECRET, 
             compress_response = True,
             debug = config.DEBUG,
