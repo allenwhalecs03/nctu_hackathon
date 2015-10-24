@@ -14,14 +14,15 @@ import myredis
 from service.account import AccountService
 
 ### api
-from api.login import LoginHandler
+from api.login import ApiLoginHandler
+#from api.bank import ApiBankNewsHandler
 
 
 ### web
 from web.index import WebIndexHandler
 from web.user  import WebUserSignHandler
 from web.error import Web404Handler
-
+from web.bank import WebInfoHandler 
 ### built-in module
 import time
 import signal
@@ -63,6 +64,9 @@ if __name__ == '__main__':
         ('/users/(sign.*)/', WebUserSignHandler),
         ('/api/users/signin/', LoginHandler),
         ('.*', Web404Handler),
+        ('/banks/info/', WebInfoHandler),
+        #('/api/banks/info/', ApiInfoHandler),
+        ('/api/users/signin/', ApiLoginHandler),
         ],  cookie_secret = config.COOKIE_SECRET, 
             compress_response = True,
             debug = config.DEBUG,
