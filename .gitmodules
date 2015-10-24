@@ -1,0 +1,18 @@
+[submodule "http/bootstrap-select"]
+	path = http/bootstrap-select
+	url = https://github.com/silviomoreto/bootstrap-select
+[submodule "http/bootstrap"]
+	path = http/bootstrap
+	url = https://github.com/twbs/bootstrap
+[submodule "http/Font-Awesome"]
+	path = http/Font-Awesome
+	url = https://github.com/FortAwesome/Font-Awesome
+[submodule "http/bootstrap-datetimepicker"]
+	path = http/bootstrap-datetimepicker
+	url = https://github.com/Eonasdan/bootstrap-datetimepicker
+[submodule "http/moment"]
+	path = http/moment
+	url = https://github.com/moment/moment/
+[submodule "http/requirejs"]
+	path = http/requirejs
+	url = https://github.com/jrburke/requirejs.git
