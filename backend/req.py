@@ -60,16 +60,6 @@ class RequestHandler(tornado.web.RequestHandler):
     def prepare(self):
         self.title = "Hackathon"
         #super().prepare()
-        self.acct = {}
-        try: 
-            self.token = self.get_secure_cookie('token').decode()
-            self.id = self.get_secure_cookie('id').decode()
-        except: 
-            print('err')
-            self.clear_cookie('token')
-            self.clear_cookie('id')
-        if self.token:
-            err, self.acct = yield from Service.User.get_user_info(self.token, self.id)
 
 
 
@@ -82,6 +72,15 @@ class ApiRequestHandler(RequestHandler):
     @tornado.gen.coroutine
     def prepare(self):
         super().prepare()
+        self.acct = {}
+        try: 
+            self.token = self.get_secure_cookie('token').decode()
+            self.id = self.get_secure_cookie('id').decode()
+        except: 
+            self.clear_cookie('token')
+            self.clear_cookie('id')
+        if self.token:
+            err, self.acct = yield from Service.User.get_user_info(self.token, self.id)
 
 class WebRequestHandler(RequestHandler):
     def set_secure_cookie(self, name, value, expires_days=30, version=None, **kwargs):
@@ -95,13 +94,22 @@ class WebRequestHandler(RequestHandler):
     def render(self, templ, **kwargs):
         kwargs['title'] = self.title
         kwargs['acct'] = self.acct
+        kwargs['token'] = self.token
         super().render('./web/template/'+templ, **kwargs)
         pass
 
     @tornado.gen.coroutine
     def prepare(self):
         super().prepare()
-        print('acct', self.token)
+        self.acct = {}
+        try: 
+            self.token = self.get_secure_cookie('token').decode()
+            self.id = self.get_secure_cookie('id').decode()
+        except: 
+            self.clear_cookie('token')
+            self.clear_cookie('id')
+        if self.token:
+            err, self.acct = yield from Service.User.get_user_info(self.token, self.id)
         if self.token is None and self.request.uri != "/users/signin/":
             self.redirect("/users/signin/")
         
