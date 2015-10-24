@@ -17,7 +17,7 @@ class WebProductHandler(WebRequestHandler):
         elif action == 'show':
             err, data = yield from Service.Product.get_product_by_id({'id': product_id})
             if err: self.write_error(500, err)
-            else: self.render('product/show_product.html')
+            else: self.render('product/show_product.html', data=data)
         elif action == 'fast':
             self.render('product/fast_product.html')
 
