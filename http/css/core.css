@@ -32,12 +32,11 @@
     resize: none; }
 
 .margin-bottom {
-  margin-bottom: 20px; }
+  margin-bottom: 40px; }
 
-@media only screen and (min-width: 992px) {
-  .footer {
-    height: 40px;
-    margin-top: -20px; } }
+.footer {
+  height: 40px;
+  margin-top: -40px; }
 
 body {
   height: 100%; }
