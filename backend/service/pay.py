@@ -6,5 +6,7 @@ class PayService(BaseService):
         self.db = db
         self.rs = rs
         PayService.inst = self
-
+    
+    def pay(self, data={}):
+        args = ['qrcode', '']
 
