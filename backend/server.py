@@ -11,11 +11,12 @@ import mysql
 import myredis
 
 ### service 
-from service.account import AccountService
+from service.user import UserService
+from service.bank import BankService
 
 ### api
 from api.login import ApiLoginHandler
-#from api.bank import ApiBankNewsHandler
+from api.bank import ApiInfoHandler
 
 
 ### web
@@ -62,7 +63,7 @@ if __name__ == '__main__':
 
         ('/users/(sign.*)/', WebUserSignHandler),
         ('/banks/info/', WebInfoHandler),
-        #('/api/banks/info/', ApiInfoHandler),
+        ('/api/banks/info/', ApiInfoHandler),
         ('/api/users/signin/', ApiLoginHandler),
         ],  cookie_secret = config.COOKIE_SECRET, 
             compress_response = True,
@@ -72,7 +73,8 @@ if __name__ == '__main__':
             xheaders=True,)
     global srv
     srv = tornado.httpserver.HTTPServer(app)
-    Service.Account = AccountService(db, rs)
+    Service.User = UserService(db, rs)
+    Service.Bank = BankService(db, rs)
     srv.listen(config.PORT)
     print('Server Started')
     signal.signal(signal.SIGTERM, sig_handler)

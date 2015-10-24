@@ -52,4 +52,4 @@ class BaseService:
         return url + '?client_id=%s'%config.CLIENT_ID
 
     def headers(self, token):
-        return {'Authorization': token}
+        return {'Authorization': str(token)}
