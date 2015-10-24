@@ -1,0 +1,19 @@
+{% extends './../frame.html' %}
+{% block content %}
+
+<script>
+require(["jquery", "bootbox"], function($, bootbox){
+    bootbox.confirm("", function(ans){
+        if(ans){
+            $.post("/pay/{{qrcode}}/", function(msg){
+            }, "json");
+        } else {
+            bootbox.alert("放棄交易", function(){
+                window.location = "/"
+            });
+        }
+    });
+});
+</script>
+
+{% end %}
