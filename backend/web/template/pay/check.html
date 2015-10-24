@@ -3,9 +3,10 @@
 
 <script>
 require(["jquery", "bootbox"], function($, bootbox){
-    bootbox.confirm("", function(ans){
+    bootbox.confirm("XDDD", function(ans){
         if(ans){
             $.post("/pay/{{qrcode}}/", function(msg){
+                window.location = "/"
             }, "json");
         } else {
             bootbox.alert("放棄交易", function(){
