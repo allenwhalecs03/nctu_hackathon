@@ -15,6 +15,7 @@ from service.account import AccountService
 
 ### api
 from api.login import ApiLoginHandler
+from api.logout import ApiLogoutHandler
 #from api.bank import ApiBankNewsHandler
 
 
@@ -65,6 +66,7 @@ if __name__ == '__main__':
         #### api
         #('/api/banks/info/', ApiInfoHandler),
         ('/api/users/signin/', ApiLoginHandler),
+        ('/api/users/signout/', ApiLogoutHandler),
         ### 404
         ('.*', Web404Handler),
         ],  cookie_secret = config.COOKIE_SECRET, 
