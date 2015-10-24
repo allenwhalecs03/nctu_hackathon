@@ -20,5 +20,5 @@ class AccountService(BaseService):
         if token: req.set_secure_cookie('token', token)
         return (None if token else res['message'], token)
 
-    def ge_account_info(self):
+    def get_account_info(self):
         pass
