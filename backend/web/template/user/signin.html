@@ -27,6 +27,7 @@
 <script>
 require(["jquery", "bootbox"], function($, bootbox){
     $(".login.form").submit(function(){
+        bootbox.alert("XD");
         $.post("/api/users/signin/", $(this).serialize(), function(msg){
         }, "json");
         return false;
