@@ -47,3 +47,6 @@ class BaseService:
         sql = ''.join(' "%s",'%col for col in data)[:-1]
         sql = 'SELECT %s FROM "%s" '%(sql, tablename)
         return sql
+
+    def add_client_id(self, url):
+        return url + '?client_id=%s'%config.CLIENT_ID
