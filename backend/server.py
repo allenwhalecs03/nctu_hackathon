@@ -56,7 +56,7 @@ if __name__ == '__main__':
     app = tornado.web.Application([
         ('/asset/(.*)', tornado.web.StaticFileHandler, {'path': '../http'}),
         ('/', WebIndexHandler),
-        ('/login/', LoginHandler),
+        ('/api/users/signin/', LoginHandler),
         ],  cookie_secret = config.COOKIE_SECRET, 
             compress_response = True,
             debug = config.DEBUG,
