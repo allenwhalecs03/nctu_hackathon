@@ -1,0 +1,29 @@
+{% extends './../frame.html' %}
+{% block content %}
+
+<div class="container">
+    {% set flag=0 %}
+    {% for item in data["foreign_market"] %}
+    {% if flag==0 %}
+    <div class="panel panel-info">
+    {% elif flag==1 %}
+    <div class="panel panel-success">
+    {% else %}
+    <div class="panel panel-warning">
+    {% end %}
+        <div class="panel-heading">
+            <h2>{{ item["title"] }}</h2>
+        </div>
+        <div class="panel-body"> 
+            {{ item["description"] }}
+        </div>
+        <div class="panel-footer" style="text-align: right"> 
+            {{ item["pub_date"] }} &nbsp;&nbsp;
+            <a class="btn btn-success" href="{{ item["link"] }}"> 前往</a>
+        </div>
+    </div>
+    {% set flag=(flag+1)%3 %}
+    {% end %}
+</div>
+
+{% end %}
