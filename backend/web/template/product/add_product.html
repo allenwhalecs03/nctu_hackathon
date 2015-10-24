@@ -24,8 +24,7 @@ require(["jquery", "bootbox"], function($, bootbox){
     $(".add.product.form").submit(function(){
         $.post("/api/products/", $(this).serialize(), function(msg){
             if(msg['status'] == 200){
-                bootbox.alert(msg['msg'], function(){
-                });
+                window.location = "/products/show/"+msg['msg']+"/";
             } else {
                 boobox.alert(msg['msg']);
             }

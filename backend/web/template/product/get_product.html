@@ -1,10 +1,13 @@
 {% extends './../frame.html' %}
 {% block content %}
 
-<h1>我的商品</h1><br>
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
-        <input name="product_name" type="text"/>
+        <h1>我的商品</h1><br>
+        <div class="input-group margin-bottom">
+            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+            <input class="form-control" name="product_name" type="text"/>
+        </div>
         <table class="table table-striped table-bordered table-hover">
             <thead>
                 <tr>
@@ -14,11 +17,12 @@
                 </tr>
             </thead>
             <tbody name="tbody">
-                {% for item in data %}
-                <tr product-id="{{ item['id'] }}">
-                    <td>{{ item["id"] }}</td>
-                    <td name="name">{{ item["name"] }}</td>
-                    <td>{{ item["price"] }}</td>
+                {% for x in data %}
+                <tr product-id="{{x['id']}}">
+                    <td><a href="/products/show/{{x['id']}}">{{x["id"]}}</a></td>
+                    <td name="name"><a href="/products/show/{{x['id']}}/">{{x["name"]}}</a></td>
+                    <td>{{x["price"]}}</td>
+                    <td><a class="btn btn-success" href="/products/show/{{x['id']}}/">前往</a></td>
                 </tr>
                 {% end %}
             </tbody>
