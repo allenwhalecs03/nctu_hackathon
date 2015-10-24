@@ -60,8 +60,12 @@ class RequestHandler(tornado.web.RequestHandler):
     def prepare(self):
         self.title = "Hackathon"
         super().prepare();
-        try: self.token = self.get_secure_cookie('token')
-        except: self.token = None
+        try: 
+            self.token = self.get_secure_cookie('token').decode()
+            self.acct = Service.User.get_user_info(self.token)
+        except: 
+            self.token = None
+            self.acct = {}
 
 
 
@@ -86,6 +90,7 @@ class WebRequestHandler(RequestHandler):
 
     def render(self, templ, **kwargs):
         kwargs['title'] = self.title
+        kwargs['acct'] = self.acct
         super().render('./web/template/'+templ, **kwargs)
         pass
 
