@@ -31,7 +31,9 @@ class ProductService(BaseService):
         if err: return (err, None)
         id = data.pop('id')
         data['user_id'] = id
+        print(data)
         sql, param = self.gen_insert_sql('products', data)
+        print(sql, param)
         res, res_cnt = yield from self.db.execute(sql, param)
         print(res)
         id = res[0]['id']

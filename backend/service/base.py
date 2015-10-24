@@ -21,6 +21,7 @@ class BaseService:
         data(dict)
         return sql(str), prama(tuple)
         '''
+        data = dict((k, v) for k, v in data.items() if v)
         sql1 = ''.join( ' "%s",'%col for col in data )[:-1]
         sql2 = (' %s,'*len(data))[:-1]
         prama = tuple( val for val in data.values() )
@@ -33,6 +34,7 @@ class BaseService:
         data(dict)
         return sql(str), prama(tuple)
         '''
+        data = dict((k, v) for k, v in data.items() if v)
         sql = ''.join(' "%s" = %%s,'%col for col in data)[:-1]
         prama = tuple( val for val in data.values() )
         sql = 'UPDATE "%s" SET %s '%(tablename, sql)
