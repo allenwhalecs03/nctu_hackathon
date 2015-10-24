@@ -1,0 +1,44 @@
+{% extends './../frame.html' %}
+{% block content %}
+
+<h1>存款</h1>
+<div class="container">
+    <table class="table table-striped table-bordered table-hover">
+        <tr>
+            <th>項目</th>
+            <th>機動利率</th>
+            <th>固定利率</th> 
+        </tr>
+        {% for item in data["rate_deposit_loan"] %}
+            {% if item["rate_type"]=="saving" %}
+            <tr>
+                <th>{{ item["item"] }}</th>
+                <th>{{ item["float_rate"] }}</th>
+                <th>{{ item["fixed_rate"] }}</th>
+            </tr>
+            {% end %}
+        {% end %}
+    </table>
+</div>
+
+<h1>借款</h1>
+<div class="container">
+    <table class="table table-striped table-bordered table-hover">
+        <tr>
+            <th>項目</th>
+            <th>機動利率</th>
+            <th>固定利率</th> 
+        </tr>
+        {% for item in data["rate_deposit_loan"] %}
+            {% if item["rate_type"]=="loan" %}
+            <tr>
+                <th>{{ item["item"] }}</th>
+                <th>{{ item["float_rate"] }}</th>
+                <th>{{ item["fixed_rate"] }}</th>
+            </tr>
+            {% end %}
+        {% end %}
+    </table>
+</div>
+
+{% end %}
