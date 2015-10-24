@@ -14,6 +14,10 @@
                 <label class="control-label">價錢</label>
                 <input type="number" class="form-control" name="price">
             </div>
+            <div class="form-group">
+                <label class="control-label">描述</label>
+                <textarea class="form-control" rows=5></textarea>
+            </div>
             <button class="btn btn-default">新增商品</button>
         </form>
     </div>
@@ -26,7 +30,7 @@ require(["jquery", "bootbox"], function($, bootbox){
             if(msg['status'] == 200){
                 window.location = "/products/show/"+msg['msg']+"/";
             } else {
-                boobox.alert(msg['msg']);
+                bootbox.alert(msg['msg']);
             }
         }, "json");
         return false;

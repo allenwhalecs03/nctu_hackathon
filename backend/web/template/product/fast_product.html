@@ -1,23 +1,31 @@
 {% extends './../frame.html' %}
 {% block content %}
 
-<h1>快速交易</h1>
 
 <div class="row">
-    <form>
-        <div class="col-md-6">
+    <div class="col-md-offset-3 col-md-6">
+        <h1>快速交易</h1>
+        <form class="add product form">
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="交易金額">
+                <input type="text" class="form-control" placeholder="交易金額" name="price">
             </div>
-        </div>
-        <div class="col-md-6">
-            <button class="btn btn-default" type="button">產生 QR code</button>
-        </div>
-    </form>
+            <button class="btn btn-success">產生 QR code</button>
+        </form>
+    </div>
 </div>
 
 <script>
-require(["jquery"], function($){
+require(["jquery", "bootbox"], function($, bootbox){
+    $(".add.product.form").submit(function(){
+        $.post("/api/products/", $(this).serialize(), function(msg){
+            if(msg['status'] == 200){
+                window.location = "/products/show/"+msg['msg']+"/";
+            } else {
+                bootbox.alert(msg['msg']);
+            }
+        }, "json");
+        return false;
+    });
 });
 
 </script>
