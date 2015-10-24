@@ -30,6 +30,7 @@ from web.user  import WebUserSignHandler
 from web.error import Web404Handler
 from web.bank import WebInfoHandler 
 from web.product import WebProductHandler
+from web.pay import WebPayHandler
 ### built-in module
 import time
 import signal
@@ -73,6 +74,7 @@ if __name__ == '__main__':
         ('/products/', WebProductHandler),
         ('/products/(\w+)/', WebProductHandler),
         ('/products/(\w+)/(\d+)/', WebProductHandler),
+        ('/pay/(\w+)/', WebPayHandler),
         #### api
         ('/api/banks/info/', ApiInfoHandler),
         ('/api/users/signin/', ApiLoginHandler),
