@@ -3,10 +3,10 @@ import requests
 import json
 import config
 
-class AccountService(BaseService):
+class UserService(BaseService):
     def __init__(self, db, rs):
         super().__init__(db, rs)
-        AccountService.inst = self
+        UserService.inst = self
 
     def login(self, req, data={}):
         '''
@@ -20,5 +20,10 @@ class AccountService(BaseService):
         if token: req.set_secure_cookie('token', token)
         return (None if token else res['message'], token)
 
-    def get_account_info(self):
-        pass
+    def get_user_info(self, token):
+        url = self.add_client_id(config.BASE_URL + '/accounts')
+        r = requests.get(url, headers=self.headers(token))
+        try: 
+            return (None, json.loads(r.text))
+        except:
+            return (r.text, None)

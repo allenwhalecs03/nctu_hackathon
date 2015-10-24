@@ -7,6 +7,6 @@ class ApiLogoutHandler(ApiRequestHandler):
     def post(self):
         try:
             self.clear_cookie("token")
-            self.render(200, token)
+            self.render(200)
         except:
             self.render(500)
