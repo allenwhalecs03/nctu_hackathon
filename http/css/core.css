@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .computer.only, .mobile.only, .tablet.only {
   display: none; }
 
@@ -44,6 +45,7 @@ body {
 .body {
   min-height: 100%;
   margin-bottom: -40px;
-  padding-bottom: 40px; }
+  padding-bottom: 40px;
+  font-family: Helvetica, Arial, "LiHei Pro", "微軟正黑體", "新細明體", sans-serif; }
 
 /*# sourceMappingURL=core.css.map */
