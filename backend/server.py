@@ -10,6 +10,10 @@ import pg
 import mysql
 import myredis
 
+
+### web
+from web.index import WebIndexHandler
+
 ### built-in module
 import time
 import signal
@@ -40,13 +44,12 @@ if __name__ == '__main__':
     print('Server Starting')
     db = pg.AsyncPG(config.DBNAME, config.DBUSER, config.DBPASSWORD, host=config.DBHOST, dbtz='+8')
     rs = myredis.MyRedis(db=1)
-    ftp = FTP(config.FTPSERVER, config.FTPPORT, config.FTPUSER, config.FTPPASSWD)
     rs.flushdb()
     ui_modules = {
             }
     app = tornado.web.Application([
         ('/asset/(.*)', tornado.web.StaticFileHandler, {'path': '../http'}),
-        ('/', IndexHandler),
+        ('/', WebIndexHandler),
         ],  cookie_secret = config.COOKIE_SECRET, 
             compress_response = True,
             debug = config.DEBUG,
