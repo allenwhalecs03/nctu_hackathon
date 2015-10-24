@@ -14,3 +14,4 @@ class BankService(BaseService):
         r = requests.get(url)
         try: return (None, json.loads(r.text))
         except: return (r.text, None)
+

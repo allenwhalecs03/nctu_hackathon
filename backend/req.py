@@ -59,15 +59,19 @@ class RequestHandler(tornado.web.RequestHandler):
     @tornado.gen.coroutine
     def prepare(self):
         self.title = "Hackathon"
-        super().prepare();
+        #super().prepare()
+        self.acct = {}
         try: 
             self.token = self.get_secure_cookie('token').decode()
             self.id = self.get_secure_cookie('id').decode()
-            err, self.acct = Service.User.get_user_info(self.token, self.id)
-            if err: raise Exception()
+            err, self.acct = yield from Service.User.get_user_info(self.token, self.id)
+            print('acct', self.acct)
         except: 
+            print('err')
+            self.clear_cookie('token')
+            self.clear_cookie('id')
             self.token = None
-            self.acct = {}
+            self.acct = None
 
 
 
@@ -99,6 +103,7 @@ class WebRequestHandler(RequestHandler):
     @tornado.gen.coroutine
     def prepare(self):
         super().prepare()
+        print('acct', self.token)
         if self.token is None and self.request.uri != "/users/signin/":
             self.redirect("/users/signin/")
         
