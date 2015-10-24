@@ -20,7 +20,7 @@ CREATE TRIGGER users_update_row BEFORE UPDATE ON users FOR EACH ROW EXECUTE PROC
 CREATE TABLE products (
     id              serial          NOT NULL PRIMARY KEY,
     user_id         integer         NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    name            varchar(255)    NOT NULL DEFAULT '快速交易' || date_trunc('second',now()),
+    name            varchar(255)    NOT NULL DEFAULT '快速交易 at ' || date_trunc('second',now()),
     price           integer         NOT NULL DEFAULT 100,
     description     text,
     qrcode          varchar(255),
