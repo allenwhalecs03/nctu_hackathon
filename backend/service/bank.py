@@ -14,3 +14,12 @@ class BankService(BaseService):
         r = requests.get(url)
         try: return (None, json.loads(r.text))
         except: return (r.text, None)
+
+    def get_bank_events(self):
+        url = self.add_client_id(config.BASE_URL + '/events')
+        r = requests.get(url)
+        try: return (None, json.loads(r.text))
+        except: return (r.text, None)
+
+
+
