@@ -10,13 +10,15 @@
                 <tr>
                     <th>ID</th>
                     <th>名稱</th>
+                    <th>價錢</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody name="tbody">
                 {% for item in data %}
                 <tr product-id="{{ item['id'] }}">
                     <td>{{ item["id"] }}</td>
-                    <td>{{ item["name"] }}</td>
+                    <td name="name">{{ item["name"] }}</td>
+                    <td>{{ item["price"] }}</td>
                 </tr>
                 {% end %}
             </tbody>
@@ -26,6 +28,14 @@
 <script>
 require(["jquery"], function($){
     $('[name=product_name]').change(function(){
+        var filter = $(this).val();
+        $('tr').each(function(idx, val){
+            if($(val).find('[name=name]').text().indexOf(filter) >= 0){
+                $(val).show();
+            }else{
+                $(val).hide();
+            }
+        });
     });
 });
 

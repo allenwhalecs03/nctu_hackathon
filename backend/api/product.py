@@ -8,7 +8,7 @@ class ApiProductHandler(ApiRequestHandler):
         args = ['name', 'price']
         meta = self.get_args(args)
         meta['id'] = self.id
-        err, res = yield from Service.Store.add_store(meta)
+        err, res = yield from Service.Product.add_product(meta)
         if err: self.render(500, err)
         else: self.render(200, res)
 
