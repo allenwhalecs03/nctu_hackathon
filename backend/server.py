@@ -14,7 +14,8 @@ import myredis
 from service.account import AccountService
 
 ### api
-from api.login import LoginHandler
+from api.login import ApiLoginHandler
+#from api.bank import ApiBankNewsHandler
 
 
 ### web
@@ -61,8 +62,8 @@ if __name__ == '__main__':
 
         ('/users/(sign.*)/', WebUserSignHandler),
         ('/banks/info/', WebInfoHandler),
-        ('/api/banks/info/', WebInfoHandler),
-        ('/api/users/signin/', LoginHandler),
+        #('/api/banks/info/', ApiInfoHandler),
+        ('/api/users/signin/', ApiLoginHandler),
         ],  cookie_secret = config.COOKIE_SECRET, 
             compress_response = True,
             debug = config.DEBUG,

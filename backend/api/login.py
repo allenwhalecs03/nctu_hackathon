@@ -2,7 +2,7 @@ from req import ApiRequestHandler
 from req import Service
 import tornado
 
-class LoginHandler(ApiRequestHandler):
+class ApiLoginHandler(ApiRequestHandler):
     @tornado.gen.coroutine
     def post(self):
         args = ['username', 'password']
