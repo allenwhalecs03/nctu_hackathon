@@ -15,6 +15,16 @@ class ProductService(BaseService):
         print("PRO", res)
         return (None, res)
 
+    def get_product_by_id(self, data):
+        args = ['id']
+        err = self.check_required_args(args, data)
+        if err: return (err, None)
+        res, res_cnt = yield from self.db.execute('SELECT * FROM products WHERE id = %s;', (data['id'],))
+        if res_cnt == 0:
+            return ('Product Not Found', None)
+        res = res[0]
+        return (None, res)
+
     def add_product(self, data):
         args = ['id', 'name',]
         err = self.check_required_args(args, data)

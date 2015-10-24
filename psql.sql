@@ -19,7 +19,8 @@ CREATE TRIGGER users_update_row BEFORE UPDATE ON users FOR EACH ROW EXECUTE PROC
 
 CREATE TABLE products (
     id              serial          NOT NULL PRIMARY KEY,
-    title           varchar(255),
+    user_id         integer         NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    name            varchar(255)    DEFAULT 'product',
     price           integer         DEFAULT 100,
     description     text,
     qrcode          varchar(255),
