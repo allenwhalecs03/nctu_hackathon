@@ -13,7 +13,6 @@ import myredis
 ### service 
 from service.user import UserService
 from service.bank import BankService
-from service.store import StoreService
 from service.product import ProductService
 
 ### api
@@ -21,7 +20,6 @@ from api.login import ApiLoginHandler
 from api.bank import ApiInfoHandler
 from api.logout import ApiLogoutHandler
 from api.user import ApiUserHandler
-from api.store import ApiStoreHandler
 from api.product import ApiProductHandler
 
 
@@ -30,7 +28,6 @@ from web.index import WebIndexHandler
 from web.user  import WebUserSignHandler
 from web.error import Web404Handler
 from web.bank import WebInfoHandler 
-from web.store import WebStoreHandler
 from web.product import WebProductHandler
 ### built-in module
 import time
@@ -72,8 +69,6 @@ if __name__ == '__main__':
         ('/users/(sign.*)/', WebUserSignHandler),
         ('/banks/info/', WebInfoHandler),
         ('/banks/info/(.*)/', WebInfoHandler),
-        ('/stores/', WebStoreHandler),
-        ('/stores/(.*)/', WebStoreHandler),
         ('/products/', WebProductHandler),
         ('/products/(\w+)/', WebProductHandler),
         ('/products/(\w+)/(\d+)/', WebProductHandler),
@@ -82,7 +77,6 @@ if __name__ == '__main__':
         ('/api/users/signin/', ApiLoginHandler),
         ('/api/users/signout/', ApiLogoutHandler),
         ('/api/users/', ApiUserHandler),
-        ('/api/stores/', ApiStoreHandler),
         ('/api/products/', ApiProductHandler),
         ### 404
         ('.*', Web404Handler),
@@ -96,7 +90,6 @@ if __name__ == '__main__':
     srv = tornado.httpserver.HTTPServer(app)
     Service.User = UserService(db, rs)
     Service.Bank = BankService(db, rs)
-    Service.Store = StoreService(db, rs)
     Service.Product = ProductService(db, rs)
     srv.listen(config.PORT)
     print('Server Started')
