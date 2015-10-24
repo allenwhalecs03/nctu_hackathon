@@ -20,7 +20,7 @@ from api.login import LoginHandler
 ### web
 from web.index import WebIndexHandler
 from web.user  import WebUserSignHandler
-
+from web.bank import WebInfoHandler 
 ### built-in module
 import time
 import signal
@@ -60,6 +60,8 @@ if __name__ == '__main__':
         ('/', WebIndexHandler),
 
         ('/users/(sign.*)/', WebUserSignHandler),
+        ('/banks/info/', WebInfoHandler),
+        ('/api/banks/info/', WebInfoHandler),
         ('/api/users/signin/', LoginHandler),
         ],  cookie_secret = config.COOKIE_SECRET, 
             compress_response = True,
