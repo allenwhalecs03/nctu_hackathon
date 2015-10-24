@@ -1,0 +1,24 @@
+{% extends './../frame.html' %}
+{% block content %}
+
+<h1>快速交易</h1>
+
+<div class="row">
+    <form>
+        <div class="col-md-6">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="交易金額">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <button class="btn btn-default" type="button">產生 QR code</button>
+        </div>
+    </form>
+</div>
+
+<script>
+require(["jquery"], function($){
+});
+
+</script>
+{% end %}
