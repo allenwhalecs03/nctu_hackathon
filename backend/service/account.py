@@ -7,10 +7,12 @@ class AccountService(BaseService):
         super().__init__(db, rs)
         AccountService.inst = self
 
-    def get_token(self, data={}):
+    def login(self, data={}):
         '''
         username, password
         '''
         url = self.add_client_id(config.BASE_URL + '/login') 
-
-
+        r = requests.post(url, data=json.dumps(data))
+        res = json.loads(r.text)
+        token = res.get('token')
+        return (None if token else res['message'], token)
