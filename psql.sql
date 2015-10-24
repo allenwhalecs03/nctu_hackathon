@@ -1,3 +1,6 @@
+DROP TABLE if EXISTS users;
+DROP TABLE if EXISTS products;
+DROP TABLE if EXISTS stores;
 CREATE OR REPLACE FUNCTION updated_row() 
 RETURNS TRIGGER AS $$
 BEGIN
@@ -7,33 +10,25 @@ END;
 $$ language 'plpgsql';
 
 CREATE TABLE users (
-    id              serial          NOT NULL PRIMARY KEY,
-    username        varchar(255)    NOT NULL,
-    account_id      varchar(255)    NOT NULL,
+    id serial NOT NULL PRIMARY KEY,
+    username varchar(255) NOT NULL,
+    account_id varchar(255) NOT NULL,
     created_at      timestamp       DEFAULT date_trunc('second',now()),
     updated_at      timestamp       DEFAULT date_trunc('second',now())
 );
 CREATE TRIGGER users_update_row BEFORE UPDATE ON users FOR EACH ROW EXECUTE PROCEDURE updated_row();
 
 CREATE TABLE stores (
-    id          serial      NOT NULL PRIMARY KEY,
-    user_id     integer     NOT NULL,
-    title       varchar(255),
-    description text,
+    id serial NOT NULL PRIMARY KEY,
     created_at      timestamp       DEFAULT date_trunc('second',now()),
     updated_at      timestamp       DEFAULT date_trunc('second',now())
 );
 CREATE TRIGGER stores_update_row BEFORE UPDATE ON stores FOR EACH ROW EXECUTE PROCEDURE updated_row();
-CREATE INDEX ON stores (user_id); 
 
 CREATE TABLE products (
-    id          serial          NOT NULL PRIMARY KEY,
-    store_id    integer         NOT NULL,
-    price       integer         NOT NULL,
-    qrcode      varchar(255),
+    id serial NOT NULL PRIMARY KEY,
     created_at      timestamp       DEFAULT date_trunc('second',now()),
     updated_at      timestamp       DEFAULT date_trunc('second',now())
+
 );
 CREATE TRIGGER products_update_row BEFORE UPDATE ON products FOR EACH ROW EXECUTE PROCEDURE updated_row();
-CREATE UNIQUE INDEX ON products (qrcode); 
-CREATE INDEX ON products (store_id); 
