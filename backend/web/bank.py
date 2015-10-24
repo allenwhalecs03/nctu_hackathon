@@ -27,7 +27,10 @@ class WebInfoHandler(WebRequestHandler):
             err, data = Service.Bank.get_bank_rate_spot_exchange()
             if err: self.write_error(500)
             else: self.render('bank/rate_spot_exchange.html', data=data)
-
+        elif page == 'rate_deposit_loan':
+            err, data = Service.Bank.get_bank_rate_deposit_loan()
+            if err: self.write_error(500)
+            else: self.render('bank/rate_deposit_loan.html', data=data)
 
 
 
