@@ -8,11 +8,11 @@
         <form class="add product form">
             <div class="form-group">
                 <label class="control-label">商品名稱</label>
-                <input type="text" class="form-control">
+                <input type="text" class="form-control" name="name">
             </div>
             <div class="form-group">
                 <label class="control-label">價錢</label>
-                <input type="number" class="form-control" name="">
+                <input type="number" class="form-control" name="price">
             </div>
             <button class="btn btn-default">新增商品</button>
         </form>
@@ -24,9 +24,13 @@ require(["jquery", "bootbox"], function($, bootbox){
     $(".add.product.form").submit(function(){
         $.post("/api/products/", $(this).serialize(), function(msg){
             if(msg['status'] == 200){
+                bootbox.alert(msg['msg'], function(){
+                });
             } else {
+                boobox.alert(msg['msg']);
             }
         }, "json");
+        return false;
     });
 });
 
