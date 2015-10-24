@@ -1,23 +1,33 @@
 {% extends './../frame.html' %}
 {% block content %}
 
-<h1>新增商品</h1>
 
 <div class="row">
-    <form>
-        <div class="col-md-6">
+    <div class="col-md-offset-3 col-md-6">
+        <h1>新增商品</h1>
+        <form class="add product form">
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="商品名稱">
+                <label class="control-label">商品名稱</label>
+                <input type="text" class="form-control">
             </div>
-        </div>
-        <div class="col-md-6">
-            <button class="btn btn-default" type="button">新增商品</button>
-        </div>
-    </form>
+            <div class="form-group">
+                <label class="control-label">價錢</label>
+                <input type="number" class="form-control" name="">
+            </div>
+            <button class="btn btn-default">新增商品</button>
+        </form>
+    </div>
 </div>
 
 <script>
-require(["jquery"], function($){
+require(["jquery", "bootbox"], function($, bootbox){
+    $(".add.product.form").submit(function(){
+        $.post("/api/products/", $(this).serialize(), function(msg){
+            if(msg['status'] == 200){
+            } else {
+            }
+        }, "json");
+    });
 });
 
 </script>
