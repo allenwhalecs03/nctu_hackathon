@@ -58,6 +58,7 @@ class RequestHandler(tornado.web.RequestHandler):
 
     @tornado.gen.coroutine
     def prepare(self):
+        self.title = "Hackathon"
         super().prepare();
         try: self.token = self.get_secure_cookie('token')
         except: self.token = None
@@ -80,10 +81,11 @@ class WebRequestHandler(RequestHandler):
         super().set_secure_cookie(name, value, expires_days, version, **kwargs)
 
     def write_error(self, status_code, err=None, **kwargs):
-        pass
+        kwargs["err"] = err
+        self.render('error/%s.html'%(status_code), **kwargs)
 
     def render(self, templ, **kwargs):
-        kwargs['title'] = "Hackathon"
+        kwargs['title'] = self.title
         super().render('./web/template/'+templ, **kwargs)
         pass
 

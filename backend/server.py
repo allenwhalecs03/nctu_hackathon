@@ -15,12 +15,14 @@ from service.account import AccountService
 
 ### api
 from api.login import ApiLoginHandler
+from api.logout import ApiLogoutHandler
 #from api.bank import ApiBankNewsHandler
 
 
 ### web
 from web.index import WebIndexHandler
 from web.user  import WebUserSignHandler
+from web.error import Web404Handler
 from web.bank import WebInfoHandler 
 ### built-in module
 import time
@@ -57,13 +59,16 @@ if __name__ == '__main__':
             }
     app = tornado.web.Application([
         ('/asset/(.*)', tornado.web.StaticFileHandler, {'path': '../http'}),
-
+        ### web
         ('/', WebIndexHandler),
-
         ('/users/(sign.*)/', WebUserSignHandler),
         ('/banks/info/', WebInfoHandler),
+        #### api
         #('/api/banks/info/', ApiInfoHandler),
         ('/api/users/signin/', ApiLoginHandler),
+        ('/api/users/signout/', ApiLogoutHandler),
+        ### 404
+        ('.*', Web404Handler),
         ],  cookie_secret = config.COOKIE_SECRET, 
             compress_response = True,
             debug = config.DEBUG,
