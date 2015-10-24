@@ -14,6 +14,7 @@ import myredis
 from service.user import UserService
 from service.bank import BankService
 from service.product import ProductService
+from service.pay import PayService
 
 ### api
 from api.login import ApiLoginHandler
@@ -91,6 +92,7 @@ if __name__ == '__main__':
     Service.User = UserService(db, rs)
     Service.Bank = BankService(db, rs)
     Service.Product = ProductService(db, rs)
+    Service.Pay = PayService(db, rs)
     srv.listen(config.PORT)
     print('Server Started')
     signal.signal(signal.SIGTERM, sig_handler)
