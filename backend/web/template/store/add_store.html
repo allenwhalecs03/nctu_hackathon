@@ -1,16 +1,34 @@
 {% extends './../frame.html' %}
 {% block content %}
 
-<h1>新增商店</h1>
 <div class="row">
-    <div class="col-md-6">
-        <div class="input-group">
-            <input type="text" class="form-control" placeholder="商店名稱">
-            <span class="input-group-btn">
-                <button class="btn btn-default" type="button">新增商店</button>
-            </span>
-        </div>
+    <div class="col-md-offset-3 col-md-6">
+        <h1>新增商店</h1>
+        <form class="add store form">
+            <div class="form-group">
+                <label class="control-label">商店名稱</label>
+                <input name="name" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label class="control-label">商店描述</label>
+                <textarea name="description" class="form-control" rows=5></textarea>
+            </div>
+            <button class="btn btn-success">新增</button>
+        </form>
     </div>
 </div>
+<script>
+require(["jquery", "bootbox"], function($, bootbox){
+    $(".add.store.form").submit(function(){
+        $.post("/api/stores/", $(this).serialize(), function(msg){
+            if(msg['status'] == 200)
+                window.location = "/";
+            else
+                bootbox.alert(msg['msg']);
+        }, "json");
+        return false;
+    });
+});
+</script>
 
 {% end %}
