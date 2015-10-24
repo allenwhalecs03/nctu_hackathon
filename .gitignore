@@ -1,4 +1,5 @@
 # Byte-compiled / optimized / DLL files
+config.py
 .sass-cache
 .*.sw[po]
 __pycache__/
