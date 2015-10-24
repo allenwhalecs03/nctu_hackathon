@@ -64,14 +64,12 @@ class RequestHandler(tornado.web.RequestHandler):
         try: 
             self.token = self.get_secure_cookie('token').decode()
             self.id = self.get_secure_cookie('id').decode()
-            err, self.acct = yield from Service.User.get_user_info(self.token, self.id)
-            print('acct', self.acct)
         except: 
             print('err')
             self.clear_cookie('token')
             self.clear_cookie('id')
-            self.token = None
-            self.acct = None
+        if self.token:
+            err, self.acct = yield from Service.User.get_user_info(self.token, self.id)
 
 
 
