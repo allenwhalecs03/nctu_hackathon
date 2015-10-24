@@ -14,7 +14,8 @@ class AccountService(BaseService):
         '''
         url = self.add_client_id(config.BASE_URL + '/login') 
         r = requests.post(url, data=json.dumps(data))
-        res = json.loads(r.text)
+        try: res = json.loads(r.text)
+        except: res = {'message': r.text}
         token = res.get('token')
         if token: req.set_secure_cookie('token', token)
         return (None if token else res['message'], token)
