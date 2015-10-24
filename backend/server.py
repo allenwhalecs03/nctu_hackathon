@@ -14,6 +14,7 @@ import myredis
 from service.user import UserService
 from service.bank import BankService
 from service.store import StoreService
+from service.product import ProductService
 
 ### api
 from api.login import ApiLoginHandler
@@ -21,6 +22,7 @@ from api.bank import ApiInfoHandler
 from api.logout import ApiLogoutHandler
 from api.user import ApiUserHandler
 from api.store import ApiStoreHandler
+from api.product import ApiProductHandler
 
 
 ### web
@@ -29,6 +31,7 @@ from web.user  import WebUserSignHandler
 from web.error import Web404Handler
 from web.bank import WebInfoHandler 
 from web.store import WebStoreHandler
+from web.product import WebProductHandler
 ### built-in module
 import time
 import signal
@@ -71,12 +74,15 @@ if __name__ == '__main__':
         ('/banks/info/(.*)/', WebInfoHandler),
         ('/stores/', WebStoreHandler),
         ('/stores/(.*)/', WebStoreHandler),
+        ('/products/', WebProductHandler),
+        ('/products/(.*)/', WebProductHandler),
         #### api
         ('/api/banks/info/', ApiInfoHandler),
         ('/api/users/signin/', ApiLoginHandler),
         ('/api/users/signout/', ApiLogoutHandler),
         ('/api/users/', ApiUserHandler),
         ('/api/stores/', ApiStoreHandler),
+        ('/api/products/', ApiProductHandler),
         ### 404
         ('.*', Web404Handler),
         ],  cookie_secret = config.COOKIE_SECRET, 

@@ -44,13 +44,27 @@
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
                             <li><a href="/banks/info/">Info</a></li>
-                            <li><a href="/stores/">Store</a></li>
+                            <li><a href="">快速交易</a></li>
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">商店管理<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="/stores/">商店列表</a><li>
+                                    <li><a href="/stores/add/">新增商店</a><li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">商品管理<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="/stores/">商品列表</a><li>
+                                    <li><a href="/stores/add/">新增商品</a><li>
+                                </ul>
+                            </li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
                                 <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">{{acct['username']}}<span class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li><a onclick="signout();"href="#">登出</a><li>
+                                    <li><a onclick="signout();"href="">登出</a><li>
                                 </ul>
                             </li>
                         </ul>
