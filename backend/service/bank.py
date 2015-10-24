@@ -39,7 +39,11 @@ class BankService(BaseService):
         try: return (None, json.loads(r.text))
         except: return (r.text, None)
 
-
+    def get_bank_rate_deposit_loan(self):
+        url = self.add_client_id(config.BASE_URL + '/rate_deposit_loan')
+        r = requests.get(url)
+        try: return (None, json.loads(r.text))
+        except: return (r.text, None)
 
 
 
