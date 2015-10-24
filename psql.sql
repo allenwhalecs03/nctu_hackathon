@@ -1,6 +1,6 @@
-DROP TABLE if EXISTS users;
 DROP TABLE if EXISTS products;
 DROP TABLE if EXISTS stores;
+DROP TABLE if EXISTS users;
 CREATE OR REPLACE FUNCTION updated_row() 
 RETURNS TRIGGER AS $$
 BEGIN
@@ -20,6 +20,8 @@ CREATE TRIGGER users_update_row BEFORE UPDATE ON users FOR EACH ROW EXECUTE PROC
 
 CREATE TABLE stores (
     id serial NOT NULL PRIMARY KEY,
+    user_id integer NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    name varchar(255) NOT NULL,
     created_at      timestamp       DEFAULT date_trunc('second',now()),
     updated_at      timestamp       DEFAULT date_trunc('second',now())
 );
@@ -27,6 +29,8 @@ CREATE TRIGGER stores_update_row BEFORE UPDATE ON stores FOR EACH ROW EXECUTE PR
 
 CREATE TABLE products (
     id serial NOT NULL PRIMARY KEY,
+    user_id integer NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    store_id integer NOT NULL REFERENCES stores(id) ON DELETE CASCADE,
     created_at      timestamp       DEFAULT date_trunc('second',now()),
     updated_at      timestamp       DEFAULT date_trunc('second',now())
 

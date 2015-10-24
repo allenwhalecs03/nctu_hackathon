@@ -13,12 +13,14 @@ import myredis
 ### service 
 from service.user import UserService
 from service.bank import BankService
+from service.store import StoreService
 
 ### api
 from api.login import ApiLoginHandler
 from api.bank import ApiInfoHandler
 from api.logout import ApiLogoutHandler
 from api.user import ApiUserHandler
+from api.store import ApiStoreHandler
 
 
 ### web
@@ -26,6 +28,7 @@ from web.index import WebIndexHandler
 from web.user  import WebUserSignHandler
 from web.error import Web404Handler
 from web.bank import WebInfoHandler 
+from web.store import WebStoreHandler
 ### built-in module
 import time
 import signal
@@ -66,11 +69,14 @@ if __name__ == '__main__':
         ('/users/(sign.*)/', WebUserSignHandler),
         ('/banks/info/', WebInfoHandler),
         ('/banks/info/(.*)/', WebInfoHandler),
-        ('/api/banks/info/', ApiInfoHandler),
+        ('/stores/', WebStoreHandler),
+        ('/stores/(.*)/', WebStoreHandler),
         #### api
+        ('/api/banks/info/', ApiInfoHandler),
         ('/api/users/signin/', ApiLoginHandler),
         ('/api/users/signout/', ApiLogoutHandler),
         ('/api/users/', ApiUserHandler),
+        ('/api/stores/', ApiStoreHandler),
         ### 404
         ('.*', Web404Handler),
         ],  cookie_secret = config.COOKIE_SECRET, 
@@ -83,6 +89,7 @@ if __name__ == '__main__':
     srv = tornado.httpserver.HTTPServer(app)
     Service.User = UserService(db, rs)
     Service.Bank = BankService(db, rs)
+    Service.Store = StoreService(db, rs)
     srv.listen(config.PORT)
     print('Server Started')
     signal.signal(signal.SIGTERM, sig_handler)
