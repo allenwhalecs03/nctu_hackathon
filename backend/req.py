@@ -80,11 +80,14 @@ class WebRequestHandler(RequestHandler):
     def write_error(self, status_code, err=None, **kwargs):
         pass
 
-    def Render(self, templ, **kwargs):
+    def render(self, templ, **kwargs):
+        kwargs['title'] = "Hackathon"
+        super().render('./web/template/'+templ, **kwargs)
         pass
 
     @tornado.gen.coroutine
     def prepare(self):
+
         super().prepare()
         
 
