@@ -89,8 +89,9 @@ class WebRequestHandler(RequestHandler):
 
     @tornado.gen.coroutine
     def prepare(self):
-
         super().prepare()
+        if self.token is None and self.request.uri != "/users/signin/":
+            self.redirect("/users/signin/")
         
 
 class WebSocketHandler(tornado.websocket.WebSocketHandler):
