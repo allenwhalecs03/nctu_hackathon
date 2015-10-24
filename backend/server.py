@@ -19,6 +19,7 @@ from api.login import LoginHandler
 
 ### web
 from web.index import WebIndexHandler
+from web.user  import WebUserSignHandler
 
 ### built-in module
 import time
@@ -55,6 +56,7 @@ if __name__ == '__main__':
             }
     app = tornado.web.Application([
         ('/asset/(.*)', tornado.web.StaticFileHandler, {'path': '../http'}),
+        ('/users/(sign.*)/', WebUserSignHandler),
         ('/', WebIndexHandler),
         ('/api/users/signin/', LoginHandler),
         ],  cookie_secret = config.COOKIE_SECRET, 

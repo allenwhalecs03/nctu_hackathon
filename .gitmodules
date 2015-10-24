@@ -16,6 +16,3 @@
 [submodule "http/requirejs"]
 	path = http/requirejs
 	url = https://github.com/jrburke/requirejs.git
-[submodule "http/bootbox"]
-	path = http/bootbox
-	url = https://github.com/makeusabrew/bootbox
