@@ -2,7 +2,7 @@ import datetime
 PASSWORD_SALT = ''
 DBNAME = 'hackathon'
 DBUSER = 'hackathon'
-DBPASSWORD = 'hackathon'
+DBPASSWORD = 'hackathon<3'
 DBHOST = '140.113.178.132'
 COOKIE_SECRET = 'wef wqasdfsdffqw wqefwqf2 '
 PORT = '1078'
