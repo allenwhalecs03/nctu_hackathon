@@ -50,3 +50,6 @@ class BaseService:
 
     def add_client_id(self, url):
         return url + '?client_id=%s'%config.CLIENT_ID
+
+    def headers(self, token):
+        return {'Authorization': token}

@@ -1,5 +1,6 @@
 from service.base import BaseService
 import requests
+import json
 import config
 
 class AccountService(BaseService):
@@ -7,7 +8,7 @@ class AccountService(BaseService):
         super().__init__(db, rs)
         AccountService.inst = self
 
-    def login(self, data={}):
+    def login(self, req, data={}):
         '''
         username, password
         '''
@@ -15,4 +16,8 @@ class AccountService(BaseService):
         r = requests.post(url, data=json.dumps(data))
         res = json.loads(r.text)
         token = res.get('token')
+        if token: req.set_secure_cookie('token', token)
         return (None if token else res['message'], token)
+
+    def ge_account_info(self):
+        pass

@@ -10,6 +10,12 @@ import pg
 import mysql
 import myredis
 
+### service 
+from service.account import AccountService
+
+### api
+from api.login import LoginHandler
+
 
 ### web
 from web.index import WebIndexHandler
@@ -44,7 +50,7 @@ def shutdown():
 if __name__ == '__main__':
     print('Server Starting')
     db = pg.AsyncPG(config.DBNAME, config.DBUSER, config.DBPASSWORD, host=config.DBHOST, dbtz='+8')
-    rs = myredis.MyRedis(db=1)
+    rs = myredis.MyRedis(db=2)
     rs.flushdb()
     ui_modules = {
             }
@@ -52,6 +58,7 @@ if __name__ == '__main__':
         ('/asset/(.*)', tornado.web.StaticFileHandler, {'path': '../http'}),
         ('/users/(sign.*)/', WebUserSignHandler),
         ('/', WebIndexHandler),
+        ('/api/users/signin/', LoginHandler),
         ],  cookie_secret = config.COOKIE_SECRET, 
             compress_response = True,
             debug = config.DEBUG,
@@ -60,6 +67,7 @@ if __name__ == '__main__':
             xheaders=True,)
     global srv
     srv = tornado.httpserver.HTTPServer(app)
+    Service.Account = AccountService(db, rs)
     srv.listen(config.PORT)
     print('Server Started')
     signal.signal(signal.SIGTERM, sig_handler)
