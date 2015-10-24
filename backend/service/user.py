@@ -16,15 +16,17 @@ class UserService(BaseService):
         r = requests.post(url, data=json.dumps(data))
         try: 
             res = json.loads(r.text)
-            req.set_secure_cookie('token', res['token'])
+            token = res['token']
+            err, res = self.get_user_info(token)
+            req.set_secure_cookie('token', token)
             _, res_cnt = yield from self.db.execute('SELECT * FROM users WHERE username = %s;', (data['username'],))
             if res_cnt == 0:
                 insert_data = {'username': data['username'], 'account_id': res['account_id']}
                 sql, param = self.gen_insert_sql('users', insert_data)
                 yield from self.db.execute(sql, param)
             return (None, token)
-        except: 
-            res = {'message': r.text}
+        except Exception as e: 
+            print(e)
             return (r.text, None)
 
     def get_user_info(self, token):
