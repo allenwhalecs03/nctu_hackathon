@@ -5,7 +5,7 @@ import tornado
 class ApiProductHandler(ApiRequestHandler):
     @tornado.gen.coroutine
     def post(self):
-        args = ['name', 'store_id']
+        args = ['name', 'price']
         meta = self.get_args(args)
         meta['id'] = self.id
         err, res = yield from Service.Store.add_store(meta)

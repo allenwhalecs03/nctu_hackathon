@@ -26,7 +26,7 @@ class ProductService(BaseService):
         return (None, res)
 
     def add_product(self, data):
-        args = ['id', 'name',]
+        args = ['id', 'name', 'price']
         err = self.check_required_args(args, data)
         if err: return (err, None)
         sql, param = self.gen_insert_sql('products', {'user_id': data['id'], 'name': data['name']})

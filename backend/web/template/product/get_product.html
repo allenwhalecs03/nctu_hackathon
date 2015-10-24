@@ -4,6 +4,7 @@
 <h1>我的商品</h1><br>
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
+        <input name="product_name" type="text"/>
         <table class="table table-striped table-bordered table-hover">
             <thead>
                 <tr>
@@ -14,13 +15,20 @@
             <tbody>
                 {% for item in data %}
                 <tr product-id="{{ item['id'] }}">
-                    <tr>{{ item["id"] }}</tr>
-                    <tr>{{ item["name"] }}</tr>
+                    <td>{{ item["id"] }}</td>
+                    <td>{{ item["name"] }}</td>
                 </tr>
                 {% end %}
             </tbody>
         </table>
     </div>
 </div>
+<script>
+require(["jquery"], function($){
+    $('[name=product_name]').change(function(){
+    });
+});
+
+</script>
 
 {% end %}
