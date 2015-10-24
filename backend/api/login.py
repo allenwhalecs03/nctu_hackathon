@@ -7,7 +7,7 @@ class LoginHandler(ApiRequestHandler):
     def post(self):
         args = ['username', 'password']
         meta = self.get_args(args)
-        err, token = Service.login(data)
+        err, token = Service.Account.login(meta)
         if err: self.render(403, err)
         else: self.render(200, token)
 
