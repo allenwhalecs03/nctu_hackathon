@@ -58,7 +58,9 @@ class RequestHandler(tornado.web.RequestHandler):
 
     @tornado.gen.coroutine
     def prepare(self):
-        pass
+        super().prepare();
+        try: self.token = self.get_secure_cookie('token')
+        except: self.token = None
 
 
 
@@ -71,8 +73,6 @@ class ApiRequestHandler(RequestHandler):
     @tornado.gen.coroutine
     def prepare(self):
         super().prepare()
-        try: self.token = self.get_secure_cookie('token')
-        except: self.token = None
 
 class WebRequestHandler(RequestHandler):
     def set_secure_cookie(self, name, value, expires_days=30, version=None, **kwargs):
