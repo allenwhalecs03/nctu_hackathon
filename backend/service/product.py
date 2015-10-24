@@ -29,7 +29,9 @@ class ProductService(BaseService):
         args = ['id', 'price']
         err = self.check_required_args(args, data)
         if err: return (err, None)
-        sql, param = self.gen_insert_sql('products', {'user_id': data['id'], 'name': data['name']})
+        id = data.pop('id')
+        data['user_id'] = id
+        sql, param = self.gen_insert_sql('products', data)
         res, res_cnt = yield from self.db.execute(sql, param)
         print(res)
         id = res[0]['id']
