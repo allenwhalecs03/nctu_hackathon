@@ -3,8 +3,15 @@
 
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
-        <h1>{{ data["name"] }}</h1><br>
-        <h2>{{ data["description"] }}</h2>
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3>{{ data["name"] }}</h3>
+            </div>
+            <div class="panel-body">
+                <h5>商品敘述：{{ data["description"] or "" }}</h5>
+                <h5>交易金額：{{ data["price"] }}</h5>
+            </div>
+        </div>
     </div>
 </div>
 
