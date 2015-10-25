@@ -21,6 +21,7 @@
                     "moment": "/asset/moment/min/moment.min",
                     "bootstrap-select": "/asset/bootstrap-select/dist/js/bootstrap-select.min",
                     "bootstrap-datetimepicker": "/asset/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min",
+                    "reconnecting-websocket": "/asset/reconnecting-websocket/reconnecting-websocket.min",
                 },
                 urlArgs: "date=2015/10/14 23:35",
             });
@@ -104,8 +105,8 @@ function signout(){
         }, "json");
     });
 }
-require(["jquery", "bootbox"], function($, bootbox){
-    var ws = new WebSocket("ws://140.113.178.132:1078/api/ws/");
+require(["jquery", "bootbox", "reconnecting-websocket"], function($, bootbox, ReconnectingWebSocket){
+    var ws = new ReconnectingWebSocket("ws://140.113.178.132:1078/api/ws/");
     ws.onmessage = function(e){
         var data = JSON.parse(e.data);
         {% if acct %}
