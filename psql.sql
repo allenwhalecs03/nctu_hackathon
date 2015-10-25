@@ -1,3 +1,4 @@
+DROP TABLE if EXISTS records;
 DROP TABLE if EXISTS products;
 DROP TABLE if EXISTS users;
 CREATE OR REPLACE FUNCTION updated_row() 
@@ -28,3 +29,13 @@ CREATE TABLE products (
     updated_at      timestamp       DEFAULT date_trunc('second',now())
 );
 CREATE TRIGGER products_update_row BEFORE UPDATE ON products FOR EACH ROW EXECUTE PROCEDURE updated_row();
+
+CREATE TABLE records (
+    id              serial          NOT NULL PRIMARY KEY,
+    from_account_id integer         NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    to_account_id   integer         NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    product_id      integer         NOT NULL REFERENCES products(id) ON DELETE CASCADE,
+    created_at      timestamp       DEFAULT date_trunc('second',now()),
+    updated_at      timestamp       DEFAULT date_trunc('second',now())
+);
+CREATE TRIGGER records_update_row BEFORE UPDATE ON records FOR EACH ROW EXECUTE PROCEDURE updated_row();

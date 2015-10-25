@@ -1,18 +1,25 @@
 {% extends './../frame.html' %}
 {% block content %}
 
+<div class="template hidden msg">
+    <div class="text-center">
+        您即將匯款至{{data['username']}}<br>
+        <span style="font-size: 50px;">{{data['price']}} NTD</span><br>
+        以上資訊是否正確？
+    </div>
+</div>
 <script>
 require(["jquery", "bootbox"], function($, bootbox){
     bootbox.dialog({
-        message: "是否要繼續交易",
+        message: $(".template.hidden.msg").html(),
         title: "交易確認",
         buttons: {
             success: {
                 label: "是",
                 className: "btn-success btn-block",
                 callback: function() {
-                    $.post("/pay/{{qrcode}}/", function(msg){
-                        window.location = "/"
+                    $.post("/api/pay/{{qrcode}}/", function(msg){
+
                     }, "json");
                 }
             },

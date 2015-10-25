@@ -22,6 +22,7 @@ from api.bank import ApiInfoHandler
 from api.logout import ApiLogoutHandler
 from api.user import ApiUserHandler
 from api.product import ApiProductHandler
+from api.pay import ApiPayHandler
 
 
 ### web
@@ -81,6 +82,7 @@ if __name__ == '__main__':
         ('/api/users/signout/', ApiLogoutHandler),
         ('/api/users/', ApiUserHandler),
         ('/api/products/', ApiProductHandler),
+        ('/api/pay/(\w+)/', ApiPayHandler),
         ### 404
         ('.*', Web404Handler),
         ],  cookie_secret = config.COOKIE_SECRET, 
