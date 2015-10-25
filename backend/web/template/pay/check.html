@@ -21,12 +21,12 @@ require(["jquery", "bootbox"], function($, bootbox){
                     var pos = {};
                     if(navigator.geolocation){
                         navigator.geolocation.getCurrentPosition(function(){
-                            pos.latitude = position.coords.latitude;
-                            pos.longitude = position.coords.longitude;
+                            pos['latitude'] = position.coords.latitude;
+                            pos['longitude'] = position.coords.longitude;
                         });
-                        }else{
-                            pos.latitude = -1;
-                            pos.longitude = -1;
+                    }else{
+                            pos['latitude'] = -1;
+                            pos['longitude'] = -1;
                         }
                     $.post("/api/pay/{{qrcode}}/", pos, function(msg){
 

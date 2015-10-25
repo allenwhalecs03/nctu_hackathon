@@ -7,10 +7,13 @@ class ApiPayHandler(ApiRequestHandler):
     def post(self, qrcode):
         args = ['longitude', 'latitude']
         meta = self.get_args(args)
+        print(meta)
         meta['token'] = self.token
         meta['id'] = self.id
         meta['qrcode'] = qrcode
         err, res = yield from Service.Pay.payqr(meta)
-        self.render(200, res)
+        print(err, res)
+        if err: self.render(500, err)
+        else: self.render(200, res)
         
 

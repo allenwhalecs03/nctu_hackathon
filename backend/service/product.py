@@ -30,7 +30,7 @@ class ProductService(BaseService):
         args = ['qrcode']
         err = self.check_required_args(args, data)
         if err: return (err, None)
-        res, res_cnt = yield from self.db.execute('SELECT p.*, u.* FROM products as p, users as u WHERE p.qrcode = %s AND p.user_id = u.id;', (data['qrcode'],))
+        res, res_cnt = yield from self.db.execute('SELECT u.*, p.* FROM products as p, users as u WHERE p.qrcode = %s AND p.user_id = u.id;', (data['qrcode'],))
         if res_cnt == 0:
             return ('Product Not Found', None)
         res = res[0]
