@@ -54,4 +54,7 @@ class PayService(BaseService):
                 "to_user_id": _to,
                 "product_id": data['product_id']
                 }
-        return (None, 123)
+        sql, param = self.gen_insert_sql('records', meta)
+        id, res_cnt = yield from self.db.execute(sql, param)
+        id = id[0]['id']
+        return (None, id)
