@@ -18,7 +18,17 @@ require(["jquery", "bootbox"], function($, bootbox){
                 label: "是",
                 className: "btn-success btn-block",
                 callback: function() {
-                    $.post("/api/pay/{{qrcode}}/", function(msg){
+                    var pos = {};
+                    if(navigator.geolocation){
+                        navigator.geolocation.getCurrentPosition(function(){
+                            pos.latitude = position.coords.latitude;
+                            pos.longitude = position.coords.longitude;
+                        });
+                        }else{
+                            pos.latitude = -1;
+                            pos.longitude = -1;
+                        }
+                    $.post("/api/pay/{{qrcode}}/", pos, function(msg){
                         if(msg['status'] == 200){
                             bootbox.alert("付款成功 交易代號 #" + msg['msg'], function(){
                                 window.location = "/";
@@ -26,6 +36,7 @@ require(["jquery", "bootbox"], function($, bootbox){
                         } else {
                             bootbox.alert("噢！有些事情發生了！");
                         }
+
                     }, "json");
                 }
             },

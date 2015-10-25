@@ -35,6 +35,8 @@ CREATE TABLE records (
     from_user_id    integer         NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     to_user_id      integer         NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     product_id      integer         NOT NULL REFERENCES products(id) ON DELETE CASCADE,
+    latitude        integer         DEFAULT -1,
+    longitude       integer         DEFAULT -1,
     created_at      timestamp       DEFAULT date_trunc('second',now()),
     updated_at      timestamp       DEFAULT date_trunc('second',now())
 );
