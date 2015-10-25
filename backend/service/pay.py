@@ -34,16 +34,33 @@ class PayService(BaseService):
     def pay(self, data={}):
         print('pay')
         args = ['payee_account_id', 'transaction_amount', 'account_id', 'id_number']
+        data = dict((k, v) for k, v in data.items() if v)
         err = self.check_required_args(args, data)
+        print(err)
         if err: return (err, None)
         token = data.pop('token')
         url = self.add_client_id(config.BASE_URL + '/accounts/%s/in_house_transfer'%data.pop('account_id'))
         r = requests.post(url, data=json.dumps(data), headers=self.headers(token))
+        print(r.text)
         meta = json.loads(r.text)
+        meta.update(data)
         meta['product_id'] = data['product_id']
+        meta['longitude'] = data.get('longitude')
+        meta['latitude'] = data.get('latitude')
         err, id = yield from self.update_db(meta)
+        print('id', err)
+        if err: return (err, None)
         err, product = yield from Service.Product.get_product_by_id({'id': data['product_id']})
-        self.rs.publish('pay_list', json.dumps(product, cls=DatetimeEncoder))
+        record, res_cnt = yield from self.db.execute('SELECT * FROM records WHERE id = %s;', (id,))
+        record = record[0]
+        print(record)
+        err, user_info = yield from Service.User.get_user_info(token, record['from_user_id'])
+        record.update(user_info)
+        record['price'] = product['price']
+        record['name'] = product['name']
+        record['description'] = product['description']
+        print('recode: ', record)
+        self.rs.publish('pay_list', json.dumps(record, cls=DatetimeEncoder))
         return (None, id)
 
     def update_db(self, data={}):
@@ -52,9 +69,12 @@ class PayService(BaseService):
         meta = {
                 "from_user_id": _from,
                 "to_user_id": _to,
-                "product_id": data['product_id']
+                "product_id": data['product_id'],
+                'latitude': data['latitude'],
+                'longitude': data['longitude']
                 }
         sql, param = self.gen_insert_sql('records', meta)
         id, res_cnt = yield from self.db.execute(sql, param)
         id = id[0]['id']
+        print('id', id)
         return (None, id)
