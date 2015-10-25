@@ -18,7 +18,7 @@ class RecordService(BaseService):
         and s1.id=records.from_user_id
         and s2.id=records.to_user_id 
         and p.id=records.product_id
-        order by id
+        order by id DESC
         """, (str(data['id']), str(data['id']),))
 
         return (None, res)
