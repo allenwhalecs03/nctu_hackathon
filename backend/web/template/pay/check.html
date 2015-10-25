@@ -19,7 +19,13 @@ require(["jquery", "bootbox"], function($, bootbox){
                 className: "btn-success btn-block",
                 callback: function() {
                     $.post("/api/pay/{{qrcode}}/", function(msg){
-
+                        if(msg['status'] == 200){
+                            bootbox.alert("付款成功 交易代號 #" + msg['msg'], function(){
+                                window.location = "/";
+                            });
+                        } else {
+                            bootbox.alert("噢！有些事情發生了！");
+                        }
                     }, "json");
                 }
             },
