@@ -5,8 +5,12 @@ import tornado
 class ApiPayHandler(ApiRequestHandler):
     @tornado.gen.coroutine
     def post(self, qrcode):
-        err, res = yield from Service.Pay.payqr({'token': self.token, 'id': self.id, 'token': self.token, 'qrcode': qrcode})
-        print("api pay", res)
+        args = ['longitude', 'latitude']
+        meta = self.get_args(args)
+        meta['token'] = self.token
+        meta['id'] = self.id
+        meta['qrcode'] = qrcode
+        err, res = yield from Service.Pay.payqr(meta)
         self.render(200, res)
         
 
