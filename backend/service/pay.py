@@ -3,6 +3,16 @@ from service.base import BaseService
 import requests
 import json
 import config
+import datetime
+
+class DatetimeEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, datetime.datetime):
+            return obj.strftime('%Y-%m-%d %H:%M:%S')
+        elif isinstance(obj, datetime.date):
+            return obj.strftime('%Y-%m-%d')
+        else:
+            return json.JSONEncoder.default(self, obj)
 
 class PayService(BaseService):
     def __init__(self, db, rs):
@@ -22,6 +32,7 @@ class PayService(BaseService):
         return (None, resid)
     
     def pay(self, data={}):
+        print('pay')
         args = ['payee_account_id', 'transaction_amount', 'account_id', 'id_number']
         err = self.check_required_args(args, data)
         if err: return (err, None)
@@ -31,6 +42,8 @@ class PayService(BaseService):
         meta = json.loads(r.text)
         meta['product_id'] = data['product_id']
         err, id = yield from self.update_db(meta)
+        err, product = yield from Service.Product.get_product_by_id({'id': data['product_id']})
+        self.rs.publish('pay_list', json.dumps(product, cls=DatetimeEncoder))
         return (None, id)
 
     def update_db(self, data={}):
@@ -41,4 +54,7 @@ class PayService(BaseService):
                 "to_user_id": _to,
                 "product_id": data['product_id']
                 }
-        return (None, 123)
+        sql, param = self.gen_insert_sql('records', meta)
+        id, res_cnt = yield from self.db.execute(sql, param)
+        id = id[0]['id']
+        return (None, id)
