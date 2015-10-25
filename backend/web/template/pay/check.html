@@ -20,24 +20,33 @@ require(["jquery", "bootbox"], function($, bootbox){
                 callback: function() {
                     var pos = {};
                     if(navigator.geolocation){
-                        navigator.geolocation.getCurrentPosition(function(){
+                        navigator.geolocation.getCurrentPosition(function(position){
                             pos['latitude'] = position.coords.latitude;
                             pos['longitude'] = position.coords.longitude;
+                            console.log(pos);
+                            $.post("/api/pay/{{qrcode}}/", pos, function(msg){
+                                if(msg['status'] == 200){
+                                    bootbox.alert("付款成功 交易代號 #" + msg['msg'], function(){
+                                        window.location = "/";
+                                    });
+                                } else {
+                                    bootbox.alert("噢！有些事情發生了！");
+                                }
+                            }, "json");
                         });
                     }else{
-                            pos['latitude'] = -1;
-                            pos['longitude'] = -1;
-                        }
-                    $.post("/api/pay/{{qrcode}}/", pos, function(msg){
-                        if(msg['status'] == 200){
-                            bootbox.alert("付款成功 交易代號 #" + msg['msg'], function(){
-                                window.location = "/";
-                            });
-                        } else {
-                            bootbox.alert("噢！有些事情發生了！");
-                        }
-
-                    }, "json");
+                        pos['latitude'] = -1;
+                        pos['longitude'] = -1;
+                        $.post("/api/pay/{{qrcode}}/", pos, function(msg){
+                            if(msg['status'] == 200){
+                                bootbox.alert("付款成功 交易代號 #" + msg['msg'], function(){
+                                    window.location = "/";
+                                });
+                            } else {
+                                bootbox.alert("噢！有些事情發生了！");
+                            }
+                        }, "json");
+                    }
                 }
             },
             danger: {
