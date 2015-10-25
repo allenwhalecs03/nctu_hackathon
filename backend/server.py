@@ -15,6 +15,7 @@ from service.user import UserService
 from service.bank import BankService
 from service.product import ProductService
 from service.pay import PayService
+from service.record import RecordService
 
 ### api
 from api.login import ApiLoginHandler
@@ -32,6 +33,7 @@ from web.error import Web404Handler
 from web.bank import WebInfoHandler
 from web.product import WebProductHandler
 from web.pay import WebPayHandler
+from web.record import WebRecordHandler
 from web.ws import WebWSHandler
 ### built-in module
 import time
@@ -77,6 +79,7 @@ if __name__ == '__main__':
         ('/products/(\w+)/', WebProductHandler),
         ('/products/(\w+)/(\d+)/', WebProductHandler),
         ('/pay/(\w+)/', WebPayHandler),
+        ('/record/', WebRecordHandler),
         ('/ws/', WebWSHandler),
         #### api
         ('/api/banks/info/', ApiInfoHandler),
@@ -100,6 +103,7 @@ if __name__ == '__main__':
     Service.Bank = BankService(db, rs)
     Service.Product = ProductService(db, rs)
     Service.Pay = PayService(db, rs)
+    Service.Record = RecordService(db, rs)
     srv.listen(config.PORT)
     print('Server Started')
     signal.signal(signal.SIGTERM, sig_handler)
