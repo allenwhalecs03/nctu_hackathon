@@ -1,16 +1,16 @@
-### tornado 
+### tornado
 import tornado.ioloop
 import tornado.httpserver
 import tornado.web
 ### self define from req import RequestHandler
-from req import Service 
+from req import Service
 ### my app
 import config
 import pg
 import mysql
 import myredis
 
-### service 
+### service
 from service.user import UserService
 from service.bank import BankService
 from service.product import ProductService
@@ -22,15 +22,16 @@ from api.bank import ApiInfoHandler
 from api.logout import ApiLogoutHandler
 from api.user import ApiUserHandler
 from api.product import ApiProductHandler
-
+from api.ws import SocketHandler
 
 ### web
 from web.index import WebIndexHandler
 from web.user  import WebUserSignHandler
 from web.error import Web404Handler
-from web.bank import WebInfoHandler 
+from web.bank import WebInfoHandler
 from web.product import WebProductHandler
 from web.pay import WebPayHandler
+from web.ws import WebWSHandler
 ### built-in module
 import time
 import signal
@@ -75,18 +76,20 @@ if __name__ == '__main__':
         ('/products/(\w+)/', WebProductHandler),
         ('/products/(\w+)/(\d+)/', WebProductHandler),
         ('/pay/(\w+)/', WebPayHandler),
+        ('/ws/', WebWSHandler),
         #### api
         ('/api/banks/info/', ApiInfoHandler),
         ('/api/users/signin/', ApiLoginHandler),
         ('/api/users/signout/', ApiLogoutHandler),
         ('/api/users/', ApiUserHandler),
         ('/api/products/', ApiProductHandler),
+        ('/api/ws/', SocketHandler),
         ### 404
         ('.*', Web404Handler),
-        ],  cookie_secret = config.COOKIE_SECRET, 
+        ],  cookie_secret = config.COOKIE_SECRET,
             compress_response = True,
             debug = config.DEBUG,
-            autoescape =    'xhtml_escape', 
+            autoescape =    'xhtml_escape',
             ui_modules =    ui_modules,
             xheaders=True,)
     global srv
