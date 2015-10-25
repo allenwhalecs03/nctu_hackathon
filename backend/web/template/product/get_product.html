@@ -20,7 +20,7 @@
             <tbody name="tbody">
                 {% for x in data %}
                 <tr product-id="{{x['id']}}">
-                    <td><a href="/products/show/{{x['id']}}">{{x["id"]}}</a></td>
+                    <td><a href="/products/show/{{x['id']}}/">{{x["id"]}}</a></td>
                     <td name="name"><a href="/products/show/{{x['id']}}/">{{x["name"]}}</a></td>
                     <td>{{x["price"]}}</td>
                     <td class="col-md-1 col-xs-2"><a class="btn btn-success btn-block" href="/products/show/{{x['id']}}/">前往</a></td>
