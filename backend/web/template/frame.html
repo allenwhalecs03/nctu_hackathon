@@ -106,17 +106,17 @@ function signout(){
     });
 }
 require(["jquery", "bootbox", "reconnecting-websocket"], function($, bootbox, ReconnectingWebSocket){
+    {% if acct %}
     var ws = new ReconnectingWebSocket("ws://140.113.178.132:1078/api/ws/");
     ws.onmessage = function(e){
         var data = JSON.parse(e.data);
-        {% if acct %}
             user_id = {{acct['id']}};
             if(data['to_user_id'] == user_id){
-            bootbox.alert("交易代碼#"+data['id']+"<br>"+data['account_name']+"購買"+data['name']+"<br>金額"+data['price']);
+                bootbox.alert("交易代碼#"+data['id']+"<br>"+data['account_name']+"購買"+data['name']+"<br>金額"+data['price']);
             }
-        {% end %}
-        console.log(data);
+            console.log(data);
     }
+    {% end %}
 });
 </script>
 </html>
