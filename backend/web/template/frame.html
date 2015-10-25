@@ -112,7 +112,9 @@ require(["jquery", "bootbox", "reconnecting-websocket"], function($, bootbox, Re
         {% if acct %}
             user_id = {{acct['id']}};
             if(data['to_user_id'] == user_id){
-            bootbox.alert("交易代碼#"+data['id']+"<br>"+data['account_name']+"購買"+data['name']+"<br>金額"+data['price']);
+                var audio = new Audio('/asset/mallert-009.mp3');
+                audio.play()
+                bootbox.alert("交易代碼#"+data['id']+"<br>"+data['account_name']+"購買"+data['name']+"<br>金額"+data['price']);
             }
         {% end %}
         console.log(data);
