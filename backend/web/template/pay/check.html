@@ -19,14 +19,13 @@ require(["jquery", "bootbox"], function($, bootbox){
                 className: "btn-success btn-block",
                 callback: function() {
                     var pos = {};
-                    if(navigator.geolocation){
+                    try{
                         navigator.geolocation.getCurrentPosition(function(position){
                             pos['latitude'] = position.coords.latitude;
                             pos['longitude'] = position.coords.longitude;
-                            console.log(pos);
                             $.post("/api/pay/{{qrcode}}/", pos, function(msg){
                                 if(msg['status'] == 200){
-                                    bootbox.alert("付款成功 交易代號 #" + msg['msg'], function(){
+                                    bootbox.alert("付款成功 交易代號 #" + msg['msg'].toString(), function(){
                                         window.location = "/";
                                     });
                                 } else {
@@ -34,7 +33,9 @@ require(["jquery", "bootbox"], function($, bootbox){
                                 }
                             }, "json");
                         });
-                    }else{
+                    }catch(err){
+                        alert("no gps");
+                        alert(err);
                         pos['latitude'] = -1;
                         pos['longitude'] = -1;
                         $.post("/api/pay/{{qrcode}}/", pos, function(msg){
