@@ -9,6 +9,8 @@
                     <th>#</th>
                     <th>付款人</th>
                     <th>收款人</th>
+                    <th>商品</th>
+                    <th>金額</th>
                     <th>交易時間</th>
                 </tr>
             </thead>
@@ -18,7 +20,9 @@
                     <td>{{x["id"]}}</a></td>
                     <td>{{x["from_user"]}}</a></td>
                     <td>{{x["to_user"]}}</td>
-                    <td>{{x['created_at']}}</a></td>
+                    <td>{{x['name']}}</td>
+                    <td>{{x['price']}}</td>
+                    <td>{{x['created_at']}}</td>
                 </tr>
                 {% end %}
             </tbody>
