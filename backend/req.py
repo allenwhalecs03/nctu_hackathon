@@ -96,6 +96,8 @@ class WebRequestHandler(RequestHandler):
     def render(self, templ, **kwargs):
         kwargs['title'] = self.title
         kwargs['acct'] = self.acct
+        if(self.acct):
+            kwargs['acct']['id'] = self.id
         kwargs['token'] = self.token
         super().render('./web/template/'+templ, **kwargs)
         pass

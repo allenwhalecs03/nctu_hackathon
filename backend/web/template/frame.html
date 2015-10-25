@@ -104,10 +104,18 @@ function signout(){
         }, "json");
     });
 }
-var ws = new WebSocket("ws://140.113.178.132:1079/api/ws/");
-ws.onmessage = function(e){
-    var data = JSON.parse(e.data);
-    console.log(data);
-}
+require(["jquery", "bootbox"], function($, bootbox){
+    var ws = new WebSocket("ws://140.113.178.132:1078/api/ws/");
+    ws.onmessage = function(e){
+        var data = JSON.parse(e.data);
+        {% if acct %}
+            user_id = {{acct['id']}};
+            if(data['to_user_id'] == user_id){
+                bootbox.alert("XD");
+            }
+        {% end %}
+        console.log(data);
+    }
+});
 </script>
 </html>
