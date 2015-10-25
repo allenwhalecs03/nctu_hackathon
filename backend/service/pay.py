@@ -46,8 +46,7 @@ class PayService(BaseService):
         err, id = yield from self.update_db(meta)
         if err: return (err, None)
         err, product = yield from Service.Product.get_product_by_id({'id': data['product_id']})
-        record, res_cnt = yield from self.db.execute('SELECT * FROM records WHERE id = %s;', (id,))
-        record = record[0]
+        err, record = yield from Service.Record.get_record_by_id({'id': id})
         err, user_info = yield from Service.User.get_user_info(token, record['from_user_id'])
         record.update(user_info)
         record['price'] = product['price']

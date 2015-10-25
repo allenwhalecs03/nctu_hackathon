@@ -29,4 +29,27 @@
         </table>
     </div>
 </div>
+<script>
+require(["jquery", "bootbox", "reconnecting-websocket"], function($, bootbox, ReconnectingWebSocket){
+    {% if acct %}
+    var rws = new ReconnectingWebSocket("ws://140.113.178.132:1078/api/ws/");
+    rws.onmessage = function(e){
+        var data = JSON.parse(e.data);
+        var user_id = {{acct['id']}};
+        if(data['to_user_id'] == user_id){
+            //bootbox.alert("交易代碼#"+data['id']+"<br>"+data['account_name']+"購買"+data['name']+"<br>金額"+data['price']);
+            html = '<tr>';
+            html += '<td>' + data['id'] + '</td>';
+            html += '<td>' + data['from_user'] + '</td>';
+            html += '<td>' + data['to_user'] + '</td>';
+            html += '<td>' + data['name'] + '</td>';
+            html += '<td>' + data['price'] + '</td>';
+            html += '<td>' + data['created_at'] + '</td>';
+            html += '</tr>';
+            $('[name=tbody]').prepend(html);
+        }
+    }
+    {% end %}
+});
+</script>
 {% end %}
