@@ -7,6 +7,7 @@ class ApiPayHandler(ApiRequestHandler):
     def post(self, qrcode):
         args = ['longitude', 'latitude']
         meta = self.get_args(args)
+        print(meta)
         meta['token'] = self.token
         meta['id'] = self.id
         meta['qrcode'] = qrcode

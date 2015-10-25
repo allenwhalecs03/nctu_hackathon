@@ -21,19 +21,18 @@ class PayService(BaseService):
         PayService.inst = self
     
     def payqr(self, data={}):
-        args = ['qrcode', 'id', 'token']
+        args = ['qrcode', 'id', 'token', 'latitude', 'longitude']
         err = self.check_required_args(args, data)
         if err: return (err, None)
         err, user_info = yield from Service.User.get_user_info(data['token'], data['id'])
         if err: return (err, None)
         err, product_info = yield from Service.Product.get_product_by_qr(data)
         if err: return (err, None)
-        err, resid = yield from self.pay({'product_id': product_info['id'], 'payee_account_id': product_info['account_id'], 'transaction_amount': product_info['price'], 'account_id': user_info['account_id'], 'token': data['token'], 'id_number': user_info['id_number']})
+        err, resid = yield from self.pay({'product_id': product_info['id'], 'payee_account_id': product_info['account_id'], 'transaction_amount': product_info['price'], 'account_id': user_info['account_id'], 'token': data['token'], 'id_number': user_info['id_number'], 'longitude': data['longitude'], 'latitude': data['latitude']})
         return (None, resid)
     
     def pay(self, data={}):
         args = ['payee_account_id', 'transaction_amount', 'account_id', 'id_number']
-        data = dict((k, v) for k, v in data.items() if v)
         err = self.check_required_args(args, data)
         if err: return (err, None)
         token = data.pop('token')
@@ -70,5 +69,6 @@ class PayService(BaseService):
                 }
         sql, param = self.gen_insert_sql('records', meta)
         id, res_cnt = yield from self.db.execute(sql, param)
+        print(id, res_cnt)
         id = id[0]['id']
         return (None, id)
