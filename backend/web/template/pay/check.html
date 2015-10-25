@@ -3,15 +3,28 @@
 
 <script>
 require(["jquery", "bootbox"], function($, bootbox){
-    bootbox.confirm("XDDD", function(ans){
-        if(ans){
-            $.post("/pay/{{qrcode}}/", function(msg){
-                window.location = "/"
-            }, "json");
-        } else {
-            bootbox.alert("放棄交易", function(){
-                window.location = "/"
-            });
+    bootbox.dialog({
+        message: "是否要繼續交易",
+        title: "交易確認",
+        buttons: {
+            success: {
+                label: "是",
+                className: "btn-success btn-block",
+                callback: function() {
+                    $.post("/pay/{{qrcode}}/", function(msg){
+                        window.location = "/"
+                    }, "json");
+                }
+            },
+            danger: {
+                label: "否",
+                className: "btn-danger btn-block",
+                callback: function() {
+                    bootbox.alert("放棄交易", function(){
+                        window.location = "/"
+                    });
+                }
+            }
         }
     });
 });
