@@ -32,8 +32,8 @@ CREATE TRIGGER products_update_row BEFORE UPDATE ON products FOR EACH ROW EXECUT
 
 CREATE TABLE records (
     id              serial          NOT NULL PRIMARY KEY,
-    from_account_id integer         NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    to_account_id   integer         NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    from_user_id    integer         NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    to_user_id      integer         NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     product_id      integer         NOT NULL REFERENCES products(id) ON DELETE CASCADE,
     created_at      timestamp       DEFAULT date_trunc('second',now()),
     updated_at      timestamp       DEFAULT date_trunc('second',now())

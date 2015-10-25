@@ -34,7 +34,6 @@ class UserService(BaseService):
             return (r.text, None)
 
     def get_user_info(self, token, id):
-        print(id)
         url = self.add_client_id(config.BASE_URL + '/accounts')
         r = requests.get(url, headers=self.headers(token))
         try: 
@@ -44,3 +43,7 @@ class UserService(BaseService):
             return (None, res)
         except:
             return (r.text, None)
+
+    def get_user_id_by_account(self, account):
+        res, rescnt = yield from self.db.execute("SELECT id FROM users WHERE account_id=%s", (account,))
+        return (None, res[0]['id'])
